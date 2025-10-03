@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Shreya Desai</title>
+  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    :root{
+      --bg: #ffffff;
+      --fg: #111827;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --card: #f8fafc;
+      --glass: rgba(255,255,255,0.6);
+      --radius: 12px;
+      --transition: 300ms cubic-bezier(.2,.9,.3,1);
+    }
+    [data-theme="dark"]{
+      --bg: #0b1220;
+      --fg: #e6eef8;
+      --muted: #9aa8bf;
+      --accent: #60a5fa;
+      --card: #071026;
+      --glass: rgba(255,255,255,0.08);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto;
+      background:var(--bg); color:var(--fg);
+      transition: background var(--transition), color var(--transition);
+      scroll-behavior:smooth;
+    }
+
+    /* Navbar */
+    .nav{
+      position:fixed; top:16px; left:50%; transform:translateX(-50%);
+      width:calc(100% - 40px); max-width:1100px; display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:10px; z-index:40;
+      background:var(--glass); backdrop-filter: blur(6px);
+      border-radius:20px; box-shadow:0 6px 24px rgba(2,6,23,0.08);
+    }
+    .logo{font-weight:700}
+    .nav-links{display:flex; gap:12px}
+    .nav-links a,.nav-links button{padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--fg); font-weight:500; transition:all 200ms}
+    .nav-links a:hover{background:rgba(0,0,0,0.05)}
+    .btn{cursor:pointer; border:none; padding:10px 14px; border-radius:10px; background:var(--accent); color:white; font-weight:600; transition:transform .3s, box-shadow .3s; display:inline-flex; align-items:center; gap:8px}
+    .btn:hover{transform:scale(1.05); box-shadow:0 6px 20px rgba(0,0,0,0.2)}
+
+    /* Hero */
+    .hero{min-height:80vh; display:grid; place-items:center; padding:90px 20px 40px}
+    .card{max-width:1100px; width:100%; display:grid; grid-template-columns:1fr 360px; gap:28px; align-items:center}
+    .intro{padding:28px; border-radius:18px; background:var(--card); box-shadow:0 10px 40px rgba(2,6,23,0.06)}
+    h1{margin:0 0 8px 0; font-size:clamp(26px,4vw,40px)}
+    p.lead{margin:0 0 14px 0; color:var(--muted)}
+
+    /* Profile Image */
+    .profile-card{
+      padding:18px; border-radius:16px; background:var(--card);
+      box-shadow:0 6px 30px rgba(8,15,30,0.06); text-align:center;
+      animation: float 4s ease-in-out infinite;
+    }
+    .profile-card img{
+      width:240px; height:240px; border-radius:50%;
+      object-fit:cover; margin-bottom:10px;
+      animation: zoomIn 1.2s ease;
+      transition: transform .4s ease, box-shadow .4s ease;
+    }
+    .profile-card img:hover{
+      transform: scale(1.1);
+      box-shadow:0 0 25px rgba(37,99,235,0.5);
+    }
+    @keyframes zoomIn{from{transform:scale(0.7); opacity:0;} to{transform:scale(1); opacity:1;}}
+    @keyframes float{0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}}
+
+    /* Sections */
+    section{max-width:1100px; margin:50px auto; padding:30px; border-radius:16px; opacity:0; transform:translateY(40px); transition:all 0.8s ease-out}
+    section.visible{opacity:1; transform:translateY(0)}
+
+    /* Skills */
+    .skills{display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; justify-content:center}
+    .skill{
+      padding:10px 14px; border-radius:999px;
+      background:rgba(37,99,235,0.1); color:var(--accent); font-weight:600;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse{
+      0%{transform:scale(1); opacity:1;}
+      50%{transform:scale(1.1); opacity:0.8;}
+      100%{transform:scale(1); opacity:1;}
+    }
+
+    /* Projects */
+    .projects{display:flex; justify-content:center; flex-wrap:wrap; gap:16px}
+    .project{
+      flex:1 1 300px; max-width:320px;
+      padding:16px; border-radius:12px; background:var(--card);
+      box-shadow:0 6px 24px rgba(2,6,23,0.03);
+      transition:transform 0.3s, box-shadow 0.3s;
+    }
+    .project:hover{transform:translateY(-8px) scale(1.03); box-shadow:0 10px 28px rgba(2,6,23,0.1)}
+
+    /* Certificates */
+    .achievements{display:flex; gap:20px; flex-wrap:wrap; justify-content:center}
+    .achieve{
+      width:240px; height:160px; overflow:hidden;
+      border-radius:12px; background:var(--card);
+      box-shadow:0 6px 24px rgba(2,6,23,0.06);
+      transition:transform 0.3s, box-shadow 0.3s;
+    }
+    .achieve img{width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease}
+    .achieve:hover{transform:scale(1.05); box-shadow:0 12px 28px rgba(2,6,23,0.2)}
+    .achieve:hover img{transform:scale(1.1)}
+
+    /* Contact */
+    form{display:grid; gap:12px; max-width:700px}
+    input,textarea{padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06); background:transparent; color:var(--fg)}
+    button[type="submit"]{padding:10px 14px;border-radius:10px;border:none;background:var(--accent); color:white}
+    footer{margin:28px auto 60px; max-width:1100px; text-align:center; color:var(--muted)}
+
+    @media(max-width:800px){.card{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="logo"></div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#achievements">Certificates</a>
+      <a href="#contact">Contact</a>
+      <button id="theme-toggle" class="btn">Toggle Theme</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <header class="hero">
+      <div class="card">
+        <div class="intro">
+          <h1>Hello — I’m Shreya 👋</h1>
+          <p class="lead">Machine Learning • Data Science • Java • Python • SQL</p>
+          <p>I enjoy building intelligent solutions using Machine Learning and Data Science. I also work on full-stack apps with Python and SQL.</p>
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+            <a href="https://linkedin.com/in/shreya-desai-96598b294" target="_blank" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            <a href="https://github.com/shreyadesai20042009" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+            <a href="resume.docx" target="_blank" class="btn"><i class="fas fa-file-alt"></i> Resume</a>
+          </div>
+        </div>
+        <!-- Profile Image -->
+        <div class="profile-card">
+          <img src="c:\Users\shrey\OneDrive\Documents\Pictures\Shreya.jpg" alt="Shreya Desai">
+        </div>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I am passionate about applying data-driven solutions to real-world problems. Skilled in <b>Machine Learning, Data Science, Python, Java, and SQL</b>, I enjoy building predictive models, dashboards, and innovative projects that make an impact.</p>
+
+      <h3>Technical Skills</h3>
+      <div class="skills">
+        <span class="skill">Python</span>
+        <span class="skill">Java</span>
+        <span class="skill">SQL</span>
+        <span class="skill">Machine Learning</span>
+        <span class="skill">Data Science</span>
+      </div>
+
+      <h3>Soft Skills</h3>
+      <div class="skills">
+        <span class="skill">Problem Solving</span>
+        <span class="skill">Teamwork</span>
+        <span class="skill">Communication</span>
+        <span class="skill">Leadership</span>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="projects">
+        <article class="project">
+          <h3><a href="https://github.com/shreyadesai20042009/Heart_Disease_Prediction" target="_blank">Heart Disease Prediction</a></h3>
+          <p>Built a Machine Learning model to predict heart disease risk based on health data.</p>
+        </article>
+        <article class="project">
+          <h3><a href="https://github.com/shreyadesai20042009/Face_Attendance" target="_blank">Face Recognition Attendance</a></h3>
+          <p>Automated attendance system using facial recognition with Python and OpenCV.</p>
+        </article>
+        <article class="project">
+          <h3><a href="https://shreyadesai20042009.github.io/Iris-project/" target="_blank">Iris Flower Recognition</a></h3>
+          <p>Classifying iris flowers based on features using Python, scikit-learn, and TensorFlow.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Certificates -->
+    <section id="achievements">
+      <h2>Certificates</h2>
+      <div class="achievements">
+        <div class="achieve"><img src="C:\Users\shrey\OneDrive\Documents\Pictures\Screenshots\Python for Data Science.png" alt="Python for Data Science"></div>
+        <div class="achieve"><img src="C:\Users\shrey\OneDrive\Documents\Pictures\Machine Learning_cer.png"alt="Machine Learning Fundamental"></div>
+        <div class="achieve"><img src="C:\Users\shrey\OneDrive\Documents\Pictures\Screenshots\Screenshot (52).png" alt="Introduction to AI"></div>
+        <div class="achieve"><img src="C:\Users\shrey\OneDrive\Documents\Pictures\Screenshots\Screenshot (130).png" alt="HTML,CSS,Bootstrap"></div>
+        <div class="achieve"><img src="C:\Users\shrey\OneDrive\Documents\Pictures\Screenshots\Screenshot (62).png" alt="Green Skills and AI"></div>
+        <div class="achieve"><img src="C:\Users\shrey\OneDrive\Documents\Pictures\WhatsApp Image 2025-05-29 at 22.13.16_afee5a5f.jpg" alt="Principle of Management"></div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <form onsubmit="event.preventDefault(); alert('Message sent (demo only). Replace with backend or mailto.');">
+        <input type="text" placeholder="Your name" required />
+        <input type="email" placeholder="Your email" required />
+        <textarea rows="4" placeholder="Message"></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+    <footer>
+    </footer>
+  </main>
+
+  <script>
+    // Theme toggle
+    const toggleBtn = document.getElementById('theme-toggle');
+    toggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+    // Section animations
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {threshold:0.2});
+    document.querySelectorAll('section').forEach(sec=>observer.observe(sec));
+  </script>
+</body>
+</html>
