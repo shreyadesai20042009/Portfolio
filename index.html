@@ -3,162 +3,486 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Shreya Desai</title>
-  
-
+  <title>Shreya Desai | Data Scientist</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
   <style>
-    :root{
+    :root {
       --bg: #ffffff;
       --fg: #111827;
-      --muted: #6b7280;
+      --muted: #4b5563;
       --accent: #2563eb;
       --card: #f8fafc;
-      --glass: rgba(255,255,255,0.6);
+      --input-bg: #f1f5f9;
       --radius: 12px;
       --transition: 300ms cubic-bezier(.2,.9,.3,1);
-    }
-    [data-theme="dark"]{
-      --bg: #0b1220;
-      --fg: #e6eef8;
-      --muted: #9aa8bf;
-      --accent: #60a5fa;
-      --card: #071026;
-      --glass: rgba(255,255,255,0.08);
+      --shadow: 0 6px 24px rgba(0,0,0,0.08);
+      --hover-shadow: 0 10px 28px rgba(0,0,0,0.12);
     }
 
-    *{box-sizing:border-box}
-    body{
-      margin:0; font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto;
-      background:var(--bg); color:var(--fg);
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --fg: #e2e8f0;
+      --muted: #a1a1aa;
+      --accent: #60a5fa;
+      --card: #1e293b;
+      --input-bg: #334155;
+      --shadow: 0 6px 24px rgba(0,0,0,0.2);
+      --hover-shadow: 0 10px 28px rgba(0,0,0,0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
       transition: background var(--transition), color var(--transition);
-      scroll-behavior:smooth;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+    }
+
+    /* Welcome Message */
+    .welcome-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .welcome-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .welcome-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    
+    .welcome-subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+    
+    .explore-btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(37,99,235,0.3);
+    }
+    
+    .explore-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(37,99,235,0.4);
     }
 
     /* Navbar */
-    .nav{
-      position:fixed; top:16px; left:50%; transform:translateX(-50%);
-      width:calc(100% - 40px); max-width:1100px; display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:10px; z-index:40;
-      background:var(--glass); backdrop-filter: blur(6px);
-      border-radius:20px; box-shadow:0 6px 24px rgba(2,6,23,0.08);
+    .nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 1100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 18px;
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      z-index: 50;
+      transition: background var(--transition), box-shadow var(--transition);
     }
-    .logo{font-weight:700}
-    .nav-links{display:flex; gap:12px}
-    .nav-links a,.nav-links button{padding:8px 12px; border-radius:10px; text-decoration:none; color:var(--fg); font-weight:500; transition:all 200ms}
-    .nav-links a:hover{background:rgba(0,0,0,0.05)}
-    .btn{cursor:pointer; border:none; padding:10px 14px; border-radius:10px; background:var(--accent); color:white; font-weight:600; transition:transform .3s, box-shadow .3s; display:inline-flex; align-items:center; gap:8px}
-    .btn:hover{transform:scale(1.05); box-shadow:0 6px 20px rgba(0,0,0,0.2)}
+
+    .nav-links {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .nav-links a, .btn {
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-links a {
+      color: var(--fg);
+    }
+    .nav-links a:hover {
+      background: rgba(0,0,0,0.07);
+    }
+    [data-theme="dark"] .nav-links a:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 10px rgba(37,99,235,0.3);
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+    }
 
     /* Hero */
-    .hero{min-height:80vh; display:grid; place-items:center; padding:90px 20px 40px}
-    .card{max-width:1100px; width:100%; display:grid; grid-template-columns:1fr 360px; gap:28px; align-items:center}
-    .intro{padding:28px; border-radius:18px; background:var(--card); box-shadow:0 10px 40px rgba(2,6,23,0.06)}
-    h1{margin:0 0 8px 0; font-size:clamp(26px,4vw,40px)}
-    p.lead{margin:0 0 14px 0; color:var(--muted)}
+    .hero {
+      min-height: 80vh;
+      display: grid;
+      place-items: center;
+      padding: 120px 20px 60px;
+    }
 
-    /* Profile Image */
-    .profile-card{
-      padding:18px; border-radius:16px; background:var(--card);
-      box-shadow:0 6px 30px rgba(8,15,30,0.06); text-align:center;
-      animation: float 4s ease-in-out infinite;
+    .card {
+      max-width: 1100px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 32px;
+      align-items: center;
     }
-    .profile-card img{
-      width:240px; height:240px; border-radius:50%;
-      object-fit:cover; margin-bottom:10px;
-      animation: zoomIn 1.2s ease;
-      transition: transform .4s ease, box-shadow .4s ease;
+
+    .intro {
+      padding: 28px;
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transition: background var(--transition), box-shadow var(--transition);
     }
-    .profile-card img:hover{
-      transform: scale(1.1);
-      box-shadow:0 0 25px rgba(37,99,235,0.5);
+
+    h1 {
+      font-size: clamp(28px, 4vw, 40px);
+      margin: 0 0 8px 0;
     }
-    @keyframes zoomIn{from{transform:scale(0.7); opacity:0;} to{transform:scale(1); opacity:1;}}
-    @keyframes float{0%{transform:translateY(0);}50%{transform:translateY(-10px);}100%{transform:translateY(0);}}
+
+    p.lead {
+      color: var(--muted);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* Profile */
+    .profile-card {
+      padding: 18px;
+      border-radius: 16px;
+      background: var(--card);
+      text-align: center;
+      transition: background var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-card img {
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      object-fit: cover;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .profile-card:hover img {
+      transform: scale(1.08);
+      box-shadow: 0 0 25px rgba(37,99,235,0.5);
+    }
 
     /* Sections */
-    section{max-width:1100px; margin:50px auto; padding:30px; border-radius:16px; opacity:0; transform:translateY(40px); transition:all 0.8s ease-out}
-    section.visible{opacity:1; transform:translateY(0)}
+    section {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 30px;
+      border-radius: 16px;
+      background: var(--card);
+      transition: background var(--transition), box-shadow var(--transition);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease-out;
+      box-shadow: var(--shadow);
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: var(--accent);
+    }
+    
+    h3 {
+      margin: 20px 0 12px;
+      color: var(--fg);
+    }
 
     /* Skills */
-    .skills{display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; justify-content:center}
-    .skill{
-      padding:10px 14px; border-radius:999px;
-      background:rgba(37,99,235,0.1); color:var(--accent); font-weight:600;
-      animation: pulse 2s infinite;
+    .skills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    @keyframes pulse{
-      0%{transform:scale(1); opacity:1;}
-      50%{transform:scale(1.1); opacity:0.8;}
-      100%{transform:scale(1); opacity:1;}
+
+    .skill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(37,99,235,0.1);
+      color: var(--accent);
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .skill:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(37,99,235,0.2);
+    }
+
+    [data-theme="dark"] .skill {
+      background: rgba(96,165,250,0.15);
+    }
+    
+    [data-theme="dark"] .skill:hover {
+      box-shadow: 0 5px 15px rgba(96,165,250,0.3);
     }
 
     /* Projects */
-    .projects{display:flex; justify-content:center; flex-wrap:wrap; gap:16px}
-    .project{
-      flex:1 1 300px; max-width:320px;
-      padding:16px; border-radius:12px; background:var(--card);
-      box-shadow:0 6px 24px rgba(2,6,23,0.03);
-      transition:transform 0.3s, box-shadow 0.3s;
+    .projects {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
     }
-    .project:hover{transform:translateY(-8px) scale(1.03); box-shadow:0 10px 28px rgba(2,6,23,0.1)}
+
+    .project {
+      flex: 1 1 300px;
+      max-width: 340px;
+      padding: 0;
+      border-radius: 12px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .project:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--hover-shadow);
+    }
+    
+    .project-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .project-content {
+      padding: 18px;
+    }
+    
+    .project h3 a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    
+    .project h3 a:hover {
+      text-decoration: underline;
+    }
 
     /* Certificates */
-    .achievements{display:flex; gap:20px; flex-wrap:wrap; justify-content:center}
-    .achieve{
-      width:240px; height:160px; overflow:hidden;
-      border-radius:12px; background:var(--card);
-      box-shadow:0 6px 24px rgba(2,6,23,0.06);
-      transition:transform 0.3s, box-shadow 0.3s;
+    .achievements {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .achieve img{width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease}
-    .achieve:hover{transform:scale(1.05); box-shadow:0 12px 28px rgba(2,6,23,0.2)}
-    .achieve:hover img{transform:scale(1.1)}
+
+    .achieve {
+      width: 240px;
+      height: 160px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .achieve img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .achieve:hover {
+      transform: scale(1.05);
+      box-shadow: var(--hover-shadow);
+    }
 
     /* Contact */
-    form{display:grid; gap:12px; max-width:700px}
-    input,textarea{padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,0.06); background:transparent; color:var(--fg)}
-    button[type="submit"]{padding:10px 14px;border-radius:10px;border:none;background:var(--accent); color:white}
-    footer{margin:28px auto 60px; max-width:1100px; text-align:center; color:var(--muted)}
+    form {
+      display: grid;
+      gap: 12px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
 
-    @media(max-width:800px){.card{grid-template-columns:1fr}}
+    input, textarea {
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: var(--input-bg);
+      color: var(--fg);
+      font-size: 1rem;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    
+    input:focus, textarea:focus {
+      outline: 2px solid var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--muted);
+    }
+
+    button[type="submit"] {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+    }
+
+    footer {
+      margin: 30px auto 50px;
+      text-align: center;
+      color: var(--muted);
+      padding: 0 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .nav {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .profile-card img {
+        width: 200px;
+        height: 200px;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .hero {
+        padding: 100px 20px 40px;
+      }
+      section {
+        padding: 20px;
+        margin: 40px auto;
+      }
+      .skills {
+        gap: 8px;
+      }
+      .skill {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+      .project {
+        max-width: 100%;
+      }
+    }
+
   </style>
 </head>
+
 <body>
+  <!-- Welcome Overlay -->
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <h1 class="welcome-title">Welcome to my Portfolio!</h1>
+    <p class="welcome-subtitle">I'm Shreya. Explore my projects, skills, and achievements.</p>
+    <button class="explore-btn" id="exploreBtn">Explore Now</button>
+  </div>
+
   <nav class="nav">
-    <div class="logo"></div>
+    <div class="logo"><strong>Shreya Desai</strong></div>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
       <a href="#achievements">Certificates</a>
       <a href="#contact">Contact</a>
-      <button id="theme-toggle" class="btn">Toggle Theme</button>
+      <button id="theme-toggle" class="btn"><i class="fas fa-moon"></i> Toggle Theme</button>
     </div>
   </nav>
 
   <main>
-    <!-- Hero -->
     <header class="hero">
       <div class="card">
         <div class="intro">
           <h1>Hello — I’m Shreya 👋</h1>
-          <p class="lead">Machine Learning • Data Science • Java • Python • SQL</p>
-          <p>I enjoy building intelligent solutions using Machine Learning and Data Science. I also work on full-stack apps with Python and SQL.</p>
-          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap">
+          <p class="lead">Aspiring Data Scientist and Machine Learning Enthusiast</p>
+          <p>Passionate about building intelligent solutions using Machine Learning and Data Science. Skilled in Python, Java, SQL, and full-stack development.</p>
+          <div style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; justify-content: center;">
             <a href="https://linkedin.com/in/shreya-desai-96598b294" target="_blank" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
             <a href="https://github.com/shreyadesai20042009" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://leetcode.com/u/Shreya_3053_Desai/" target="_blank" class="btn"><i class="fas fa-code"></i> LeetCode</a>
             <a href="resume.docx" target="_blank" class="btn"><i class="fas fa-file-alt"></i> Resume</a>
           </div>
         </div>
-        <!-- Profile Image -->
         <div class="profile-card">
           <img src="Shreya.jpg" alt="Shreya Desai">
         </div>
       </div>
     </header>
 
-    <!-- About -->
     <section id="about">
       <h2>About Me</h2>
       <p>I am passionate about applying data-driven solutions to real-world problems. Skilled in <b>Machine Learning, Data Science, Python, Java, and SQL</b>, I enjoy building predictive models, dashboards, and innovative projects that make an impact.</p>
@@ -170,6 +494,9 @@
         <span class="skill">SQL</span>
         <span class="skill">Machine Learning</span>
         <span class="skill">Data Science</span>
+        <span class="skill">Data Analysis</span>
+        <span class="skill">OpenCV</span>
+        <span class="skill">TensorFlow</span>
       </div>
 
       <h3>Soft Skills</h3>
@@ -178,57 +505,72 @@
         <span class="skill">Teamwork</span>
         <span class="skill">Communication</span>
         <span class="skill">Leadership</span>
+        <span class="skill">Critical Thinking</span>
+        <span class="skill">Adaptability</span>
       </div>
     </section>
 
-    <!-- Projects -->
     <section id="projects">
       <h2>Projects</h2>
       <div class="projects">
         <article class="project">
-          <h3><a href="https://github.com/shreyadesai20042009/Heart_Disease_Prediction" target="_blank">Heart Disease Prediction</a></h3>
-          <p>Built a Machine Learning model to predict heart disease risk based on health data.</p>
+          <img src="Hear_disease.jpg" alt="Heart Disease Prediction" class="project-image">
+          <div class="project-content">
+            <h3><a href="https://github.com/shreyadesai20042009/Heart_Disease_Prediction" target="_blank">Heart Disease Prediction</a></h3>
+            <p>Built a Machine Learning model to predict heart disease risk based on health data.</p>
+          </div>
         </article>
         <article class="project">
-          <h3><a href="https://github.com/shreyadesai20042009/Face_Attendance" target="_blank">Face Recognition Attendance</a></h3>
-          <p>Automated attendance system using facial recognition with Python and OpenCV.</p>
+          <img src="face_recognition.jpg" alt="Face Recognition Attendance" class="project-image">
+          <div class="project-content">
+            <h3><a href="https://github.com/shreyadesai20042009/Face_Attendance" target="_blank">Face Recognition Attendance</a></h3>
+            <p>Automated attendance system using facial recognition with Python and OpenCV.</p>
+          </div>
         </article>
         <article class="project">
-          <h3><a href="https://shreyadesai20042009.github.io/Iris-project/" target="_blank">Iris Flower Recognition</a></h3>
-          <p>Classifying iris flowers based on features using Python, scikit-learn, and TensorFlow.</p>
+          <img src="iris_flower.jpeg" alt="Iris Flower Recognition" class="project-image">
+          <div class="project-content">
+            <h3><a href="https://shreyadesai20042009.github.io/Iris-project/" target="_blank">Iris Flower Recognition</a></h3>
+            <p>Classifying iris flowers using Python, scikit-learn, and TensorFlow.</p>
+          </div>
         </article>
       </div>
     </section>
 
-    <!-- Certificates -->
     <section id="achievements">
       <h2>Certificates</h2>
       <div class="achievements">
         <div class="achieve"><img src="Python for Data Science.png" alt="Python for Data Science"></div>
-        <div class="achieve"><img src="Machine Learning_cer.png"alt="Machine Learning Fundamental"></div>
-        <div class="achieve"><img src="Screenshot (52).png" alt="Introduction to AI"></div>
-        <div class="achieve"><img src="Screenshot (240).png" alt="Codathon"></div>
-        <div class="achieve"><img src="Screenshot (62).png" alt="Green Skills and AI"></div>
-        <div class="achieve"><img src="WhatsApp Image 2025-05-29 at 22.13.16_afee5a5f.jpg" alt="Principle of Management"></div>
+        <div class="achieve"><img src="Machine Learning.png" alt="Machine Learning Fundamental"></div>
+        <div class="achieve"><img src="Great learning.png" alt="Introduction to AI"></div>
+        <div class="achieve"><img src="Codathon.png" alt="Codathon"></div>
+        <div class="achieve"><img src="Green Skills and AI.png" alt="Green Skills and AI"></div>
+        <div class="achieve"><img src="POM.jpg"alt="Principle of Management"></div>
       </div>
     </section>
 
-    <!-- Contact -->
     <section id="contact">
       <h2>Contact</h2>
-      <form onsubmit="event.preventDefault(); alert('Message sent (demo only). Replace with backend or mailto.');">
+      <form onsubmit="event.preventDefault(); alert('Message sent (demo only).');">
         <input type="text" placeholder="Your name" required />
         <input type="email" placeholder="Your email" required />
-        <textarea rows="4" placeholder="Message"></textarea>
+        <textarea rows="4" placeholder="Message" required></textarea>
         <button type="submit">Send Message</button>
       </form>
     </section>
 
-    <footer>
-    </footer>
+    <footer>© 2025 Shreya Desai. All rights reserved.</footer>
   </main>
 
   <script>
+    // Welcome message
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const exploreBtn = document.getElementById('exploreBtn');
+    
+    exploreBtn.addEventListener('click', () => {
+      welcomeOverlay.classList.add('hidden');
+    });
+    
     // Theme toggle
     const toggleBtn = document.getElementById('theme-toggle');
     toggleBtn.addEventListener('click', () => {
@@ -236,21 +578,29 @@
       const next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
+      toggleBtn.innerHTML = next === 'dark'
+        ? '<i class="fas fa-sun"></i> Light Mode'
+        : '<i class="fas fa-moon"></i> Dark Mode';
     });
+    
+    // Set initial theme
     const savedTheme = localStorage.getItem('theme');
-    if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      toggleBtn.innerHTML = savedTheme === 'dark'
+        ? '<i class="fas fa-sun"></i> Light Mode'
+        : '<i class="fas fa-moon"></i> Dark Mode';
+    }
 
-    // Section animations
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
+    // Section fade-in animation
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
-    }, {threshold:0.2});
-    document.querySelectorAll('section').forEach(sec=>observer.observe(sec));
+    }, { threshold: 0.2 });
+    document.querySelectorAll('section').forEach(sec => observer.observe(sec));
   </script>
 </body>
-
 </html>
-
