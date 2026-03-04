@@ -4,9 +4,7 @@ This Portfolio Website is a modern, responsive, and dynamic web application desi
 
 The website highlights my hands-on experience in web development, data science, and real-world problem solving through interactive project demonstrations and detailed case studies. Built with a clean UI and smooth user experience, this portfolio represents my professional journey, continuous learning mindset, and commitment to excellence.
 
-It serves as a centralized platform where recruiters, collaborators, and tech enthusiasts can explore my work, technical stack, certifications, and contact details — all in one place.
 
-If you want something even more bold and powerful (recruiter-focused), here’s an upgraded version 🔥
 
 🌟 Project Overview
 
