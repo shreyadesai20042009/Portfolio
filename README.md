@@ -1,4 +1,4 @@
-🚀 Project Description
+## 🚀 Project Description
 
 This Portfolio Website is a modern, responsive, and dynamic web application designed to showcase my skills, projects, and achievements as a Software Developer and Machine Learning Enthusiast. It reflects not just my technical expertise, but also my passion for building scalable, user-focused solutions.
 
@@ -6,7 +6,7 @@ The website highlights my hands-on experience in web development, data science, 
 
 
 
-🌟 Project Overview
+## 🌟 Project Overview
 
 A professionally crafted, fully responsive portfolio website that showcases my expertise in Software Development, Machine Learning, and Full-Stack Technologies. Designed with performance, usability, and aesthetics in mind, this portfolio demonstrates my ability to transform ideas into real-world digital solutions.
 
